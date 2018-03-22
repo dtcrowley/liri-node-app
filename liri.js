@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 var fs = require("fs");
-var client = require("twitter");
+var twitter = require("twitter");
 var spotify = require("node-spotify-api");
 var request = require("request");
 var arg1 = process.argv[2];
@@ -45,6 +45,24 @@ function movie(){
     };
     });
 };
+function myTweets() {
+
+    var client = new twitter(keys.exports.twitter);
+		 
+    var twitterUsername = userINPUT;
+    var text = "text";
+    var params = {screen_name: twitterUsername, count: 20};
+    if(!twitterUsername){
+        twitterUsername = "boot_liri";
+    }
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {    
+        if (!error) 
+        {console.log(error);
+            console.log("Uh... Something's wrong:" + err)}  
+    }
+    )
+};
+
 
 function doWhat(){
     fs.readFile("random.txt", "utf8", function(error, data) {
@@ -57,8 +75,8 @@ function doWhat(){
         arg2 = dataArr[1];
  
         spotify(arg2);
-    }
-)}; 
+    })
+}; 
 
 switch (arg1) {
     case 'do-what-it-says':
@@ -68,5 +86,9 @@ switch (arg1) {
     case 'movie-this':
     movie();
     break
-}
+
+    case 'my-tweets':
+    myTweets();
+    break
+};
 
