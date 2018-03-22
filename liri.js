@@ -14,7 +14,7 @@ function movie(){
     var movieName = "";
 
     for (var i = 3; i < nodeArgs.length; i++) {
-        console.log(movieName);
+        // console.log(movieName);
         if (i > 3 && i < nodeArgs.length) {
             movieName = movieName + "+" + nodeArgs[i];
         } 
@@ -52,13 +52,14 @@ function myTweets() {
     var user = {
         screen_name: 'boot_liri',
         count: 20,
+        result_type: 'recent'
     }
     client.get('statuses/user_timeline', user, function(err, tweets, response) {
         if (err) {
             console.log('Error: ' + err);
             return;
         }
-        for (var i = 3; i < tweets.length; i++) {
+        for (var i = 2; i < tweets.length; i++) {
             var results = tweets[i].text + '\n';
         }
     })
@@ -66,19 +67,19 @@ function myTweets() {
 
 function spotify() {
     var spotify = new spotify(keys.spotify);
+    if (inputs === '') {
+        inputs = 'The Sign Ace of Base'
+    }
+    spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+        if (err) {
+        return console.log('Error occurred: ' + err);
+        }
+    console.log(data); 
+    })
     var song = data.tracks.items[0];
     var results = 'Artist: ' + song.artists[0].name + '\nSong: ' + song.name
     + '\nURL: ' + song.preview_url + '\nAlbum: ' + song.album.name + '\n';
     console.log(results);
-        if (inputs === '') {
-            inputs = 'The Sign Ace of Base'
-        }
-        spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
-            if (err) {
-            return console.log('Error occurred: ' + err);
-            }
-        console.log(data); 
-        });
 };
 
 
@@ -106,12 +107,12 @@ switch (arg1) {
     break;
 
     case 'my-tweets':
-    console.log("My Tweets");
+    // console.log("My Tweets");
     myTweets();
     break;
 
     case 'spotify-this-song':
-    console.log("Pick a song");
+    // console.log("Pick a song");
     spotify();
     break;
 };
