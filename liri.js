@@ -111,6 +111,7 @@ switch (arg1) {
     break;
 
     case 'spotify-this-song':
+    console.log("Pick a song");
     spotify();
     break;
 };
