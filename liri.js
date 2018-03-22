@@ -33,6 +33,7 @@ function movie(){
         title = "Title: " + JSON.parse(body).Title;
         year = "Release Year: " + JSON.parse(body).Year;
         rating = "IMDB Rating: " + JSON.parse(body).imdbRating;
+        rotten = "Metascore: " + JSON.parse(body).Metascore;
         lang = "Language: " + JSON.parse(body).Language;
         plot = "Plot: " + JSON.parse(body).Plot;
         actors = "Starring: " + JSON.parse(body).Actors;
@@ -56,10 +57,27 @@ function myTweets() {
             console.log('Error: ' + err);
             return;
         }
-        for (var i = 0; i < tweets.length; i++) {
+        for (var i = 3; i < tweets.length; i++) {
             var results = tweets[i].text + '\n';
             logResults(results);
         }
+    })
+};
+
+function spotify() {
+    var spotify = new spotify(keys.spotify);
+    if (inputs === '') {
+        inputs = 'The Sign Ace of Base'
+    }
+    spotify.search({type: 'track', query: inputs, limit: 1}, function(err, data) {
+        if (err) {
+            console.log('Error: ' + err);
+            return;
+        }
+        var song = data.tracks.items[0];
+        var results = 'Artist: ' + song.artists[0].name + '\nSong: ' + song.name
+        + '\nURL: ' + song.preview_url + '\nAlbum: ' + song.album.name + '\n';
+        logResults(results);
     })
 };
 
@@ -85,10 +103,14 @@ switch (arg1) {
     
     case 'movie-this':
     movie();
-    break
+    break;
 
     case 'my-tweets':
     myTweets();
-    break
+    break;
+
+    case 'spotify-this-song':
+    spotify();
+    break;
 };
 
