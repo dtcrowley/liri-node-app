@@ -50,7 +50,7 @@ function movie(){
 function myTweets() {
     var client = new twitter(keys.twitter);
     var user = {
-        screen_name: 'boot_liri',
+        screen_name: 'Liri Boot',
         count: 20,
         result_type: 'recent'
     }
