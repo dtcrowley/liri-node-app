@@ -8,6 +8,8 @@ var keys = require('./keys.js');
 var arg1 = process.argv[2];
 var arg2 = process.argv[3];
 
+var input = process.argv.slice(3).join(" ");
+
 function movie(){
     var nodeArgs = process.argv;
 
@@ -24,7 +26,7 @@ function movie(){
     if (arg2 === undefined){
         movieName = "Mr Nobody";
     } 
-    console.log(movieName);
+    // console.log(movieName);
     
     var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy"
     request(queryURL, function(error, response, body) {
@@ -49,26 +51,23 @@ function movie(){
 };
 function myTweets() {
     var client = new twitter(keys.twitter);
-    var user = {
-        screen_name: 'Liri Boot',
-        count: 20,
-        result_type: 'recent'
-    }
-    client.get('statuses/user_timeline', user, function(err, tweets, response) {
+    var userId = {screen_name: 'Liri Boot', count: 20, result_type: 'recent'}
+
+    client.get('statuses/user_timeline', userId, function(err, tweet, response) {
         if (err) {
             console.log('Error: ' + err);
             return;
         }
-        for (var i = 2; i < tweets.length; i++) {
-            var results = tweets[i].text + '\n';
+        for (var i = 2; i < tweet.length; i++) {
+            var results = tweet[i].text;
         }
     })
 };
 
 function spotify() {
     var spotify = new spotify(keys.spotify);
-    if (inputs === '') {
-        inputs = 'The Sign Ace of Base'
+    if (input === '') {
+        input = 'The Sign Ace of Base'
     }
     spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
         if (err) {
