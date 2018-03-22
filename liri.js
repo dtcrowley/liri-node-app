@@ -46,21 +46,21 @@ function movie(){
     });
 };
 function myTweets() {
-
-    var client = new twitter(keys.exports.twitter);
-		 
-    var twitterUsername = userINPUT;
-    var text = "text";
-    var params = {screen_name: twitterUsername, count: 20};
-    if(!twitterUsername){
-        twitterUsername = "boot_liri";
+    var client = new twitter(keys.twitter);
+    var user = {
+        screen_name: 'boot_liri',
+        count: 20,
     }
-    client.get('statuses/user_timeline', params, function(error, tweets, response) {    
-        if (!error) 
-        {console.log(error);
-            console.log("Uh... Something's wrong:" + err)}  
-    }
-    )
+    client.get('statuses/user_timeline', user, function(err, tweets, response) {
+        if (err) {
+            console.log('Error: ' + err);
+            return;
+        }
+        for (var i = 0; i < tweets.length; i++) {
+            var results = tweets[i].text + '\n';
+            logResults(results);
+        }
+    })
 };
 
 
