@@ -66,19 +66,19 @@ function myTweets() {
 
 function spotify() {
     var spotify = new spotify(keys.spotify);
-    if (inputs === '') {
-        inputs = 'The Sign Ace of Base'
-    }
-    spotify.search({type: 'track', query: inputs, limit: 1}, function(err, data) {
-        if (err) {
-            console.log('Error: ' + err);
-            return;
+    var song = data.tracks.items[0];
+    var results = 'Artist: ' + song.artists[0].name + '\nSong: ' + song.name
+    + '\nURL: ' + song.preview_url + '\nAlbum: ' + song.album.name + '\n';
+    console.log(results);
+        if (inputs === '') {
+            inputs = 'The Sign Ace of Base'
         }
-        var song = data.tracks.items[0];
-        var results = 'Artist: ' + song.artists[0].name + '\nSong: ' + song.name
-        + '\nURL: ' + song.preview_url + '\nAlbum: ' + song.album.name + '\n';
-        logResults(results);
-    })
+        spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+            if (err) {
+            return console.log('Error occurred: ' + err);
+            }
+        console.log(data); 
+        });
 };
 
 
