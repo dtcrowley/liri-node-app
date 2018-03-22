@@ -4,6 +4,7 @@ var fs = require("fs");
 var twitter = require("twitter");
 var spotify = require("node-spotify-api");
 var request = require("request");
+var keys = require('./keys.js');
 var arg1 = process.argv[2];
 var arg2 = process.argv[3];
 
@@ -59,7 +60,6 @@ function myTweets() {
         }
         for (var i = 3; i < tweets.length; i++) {
             var results = tweets[i].text + '\n';
-            logResults(results);
         }
     })
 };
@@ -106,6 +106,7 @@ switch (arg1) {
     break;
 
     case 'my-tweets':
+    console.log("My Tweets");
     myTweets();
     break;
 
