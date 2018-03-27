@@ -2,12 +2,12 @@ require("dotenv").config();
 
 var fs = require("fs");
 var twitter = require("twitter");
-var spotify = require("node-spotify-api");
+var Spotify = require("node-spotify-api");
 var request = require("request");
 var keys = require('./keys.js');
 var arg1 = process.argv[2];
 var arg2 = process.argv[3];
-
+console.log(keys);
 var input = process.argv.slice(3).join(" ");
 
 function movie(){
@@ -51,7 +51,7 @@ function movie(){
 };
 function myTweets() {
     var client = new twitter(keys.twitter);
-    var userId = {screen_name: 'Liri Boot', count: 20, result_type: 'recent'}
+    var userId = {screen_name: 'boot_liri', count: 20, result_type: 'recent'}
 
     client.get('statuses/user_timeline', userId, function(err, tweet, response) {
         if (err) {
@@ -60,25 +60,26 @@ function myTweets() {
         }
         for (var i = 2; i < tweet.length; i++) {
             var results = tweet[i].text;
+            console.log(results);
         }
     })
 };
 
 function spotify() {
-    var spotify = new spotify(keys.spotify);
+    var spotify = new Spotify(keys.spotify);
     if (input === '') {
         input = 'The Sign Ace of Base'
     }
-    spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+    spotify.search({ type: 'track', query: arg2 }, function(err, data) {
         if (err) {
         return console.log('Error occurred: ' + err);
         }
-    console.log(data); 
+        // console.log(data);
+        var song = data.tracks.items[0];
+        var results = 'Artist: ' + song.artists[0].name + '\nSong: ' + song.name
+        + '\nURL: ' + song.preview_url + '\nAlbum: ' + song.album.name + '\n';
+        console.log(results); 
     })
-    var song = data.tracks.items[0];
-    var results = 'Artist: ' + song.artists[0].name + '\nSong: ' + song.name
-    + '\nURL: ' + song.preview_url + '\nAlbum: ' + song.album.name + '\n';
-    console.log(results);
 };
 
 
